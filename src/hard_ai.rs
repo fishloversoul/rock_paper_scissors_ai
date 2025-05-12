@@ -7,7 +7,6 @@ pub fn hard_ai(data: u32) -> u32{
   let (one, two, three) = count_123(&fmoves);
   logger(data);
 
-  println!("{:?}",fmoves);
 
   if one >= two && one >= three {
     2
@@ -20,7 +19,6 @@ pub fn hard_ai(data: u32) -> u32{
 
 fn pattern_find() -> Vec<u32>{
   let moves = reader();
-  println!("{:?}",moves);
   let recent_pattern = &moves[moves.len().saturating_sub(WINDOW_SIZE)..];
 
   let mut following_move = Vec::new();
@@ -32,8 +30,6 @@ fn pattern_find() -> Vec<u32>{
       }
     }
   };
-
-  println!("{:?}",following_move);
 
   following_move
 }

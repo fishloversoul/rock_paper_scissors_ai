@@ -58,6 +58,8 @@ fn main() {
           if score == 1 {ai_score += 1};
         }, 
         "imposible" => {
+          let inpute = s_to_n(input.as_str());
+          medium_ai::logger(inpute);
           imposible_ai(input);
           ai_score += 1;
         },
@@ -86,7 +88,7 @@ fn score(a:String, b:String) -> i32{
     (a,b) if a==b => {println!("tie")},
     ("paper", "rock") | ("rock", "scissors" ) | ("scissors", "paper") => {win = 1; println!("ai wins")},
     ("rock", "paper") | ("scissors", "rock") | ("paper", "scissors") => {win = 2; println!("player wins")},
-    _ => println!("aaaaaaa")
+    _ => println!("wrong play (rock, paper, scissors)")
   }
   win
 }

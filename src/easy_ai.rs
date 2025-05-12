@@ -1,14 +1,37 @@
-use std::time::{SystemTime, UNIX_EPOCH};
-
 pub fn easy_ai() -> u32 {
-  let seed = basic_rng(3)+1;
-  seed
+  let seed = std::time::SystemTime::now()
+    .duration_since(std::time::UNIX_EPOCH)
+    .unwrap()
+    .as_nanos() as u32;
+
+  let mut rng = BASICRNG::new(seed);
+
+  let number = rng.gen_rang(3);
+
+  number
 }
 
-fn basic_rng(rang: u32) -> u32{
-  let now = SystemTime::now();
-  let time = now.duration_since(UNIX_EPOCH).expect("Time went backwards");
-  let nanos = time.as_nanos() as u64;
-  let seed = (nanos % rang as u64) as u32;
-  seed
+struct BASICRNG {
+  state: u32,
+}
+
+impl BASICRNG {
+  pub fn new(mut seed: u32) -> Self {
+    if seed == 0 { seed = 0xCAFEBABE; }
+    BASICRNG { state: seed }
+  }
+
+  pub fn next_u32(&mut self) -> u32 {
+    let mut x = self.state;
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    self.state = x;
+    x
+  }
+
+  pub fn gen_rang(&mut self, max: u32) -> u32 {
+    assert!(max > 0);
+    (self.next_u32() % max) + 1
+  }
 }
